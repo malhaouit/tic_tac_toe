@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""The entry point for running the Flask application.
+"""
+The entry point for running the Flask application.
 """
 from flask import Flask
 from flask_socketio import SocketIO, emit, join_room, leave_room
