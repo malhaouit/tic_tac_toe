@@ -130,3 +130,7 @@ def check_winner(board):
         if board[combination[0]] and board[combination[0]] == board[combination[1]] == board[combination[2]]:
             return board[combination[0]]
     return None
+
+def check_tie(board):
+    """Checks if the board is full and no winner is present."""
+    return '' not in board and check_winner(board) is None

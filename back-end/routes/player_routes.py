@@ -80,6 +80,18 @@ def get_player(id):
     return jsonify({"error": "Player not found"}), 404
 
 
+@bp.route('/players/<player_id>/stats')
+def player_stats(player_id):
+    stats = get_player_stats(player_id)
+    return jsonify(stats)
+
+@bp.route('/ai/stats/<difficulty>')
+def ai_stats(difficulty):
+    stats = get_ai_stats(difficulty)
+    return jsonify(stats)
+
+
+
 @bp.route('/players/<id>/stats', methods=['PUT'], strict_slashes=False)
 def update_player_stats(id):
     """
