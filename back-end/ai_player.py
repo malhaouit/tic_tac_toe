@@ -34,9 +34,11 @@ class AIPlayer:
     def mixed_move(self, board):
         """Mixes between random and Minimax-based moves (50-50 chance)."""
         if random.random() < 0.5:
-            return self.random_move(board)  # 50% chance of random move
+            # 50% chance of random move
+            return self.random_move(board)
         else:
-            return self.minimax_move(board)  # 50% chance of Minimax move
+            # 50% chance of Minimax move
+            return self.minimax_move(board)
 
     def minimax_move(self, board):
         """Returns the best move using the Minimax algorithm with
@@ -50,21 +52,26 @@ def get_best_move_with_cutoff(board):
     """
     best_score = float('-inf')
     best_move = None
-    depth_cutoff = 5  # Increased depth for better performance
+    depth_cutoff = 5
 
     for i in range(9):
         if board[i] == ' ':
             board[i] = 'X'
-            score = minimax_with_cutoff(board, 0, False, depth_cutoff, float('-inf'), float('inf'))
-            board[i] = ' '  # Restore the board state
+            score = minimax_with_cutoff(board, 0, False, depth_cutoff,
+                                        float('-inf'), float('inf'))
+            # Restore the board state
+            board[i] = ' '
             if score > best_score:
                 best_score = score
                 best_move = i
 
     return best_move
 
-def minimax_with_cutoff(board, depth, is_maximizing, depth_cutoff, alpha, beta):
-    """Minimax algorithm with a depth cutoff and alpha-beta pruning to limit recursion depth."""
+def minimax_with_cutoff(board, depth, is_maximizing,
+                        depth_cutoff, alpha, beta):
+    """Minimax algorithm with a depth cutoff and
+    alpha-beta pruning to limit recursion depth.
+    """
     winner = check_winner(board)
     if winner == "X":
         return 10 - depth
@@ -74,15 +81,18 @@ def minimax_with_cutoff(board, depth, is_maximizing, depth_cutoff, alpha, beta):
         return 0
 
     if depth >= depth_cutoff:
-        return heuristic_evaluation(board)  # Use heuristic evaluation at cutoff depth
+        # Use heuristic evaluation at cutoff depth
+        return heuristic_evaluation(board)
 
     if is_maximizing:
         best_score = float('-inf')
         for i in range(9):
             if board[i] == ' ':
                 board[i] = 'X'
-                score = minimax_with_cutoff(board, depth + 1, False, depth_cutoff, alpha, beta)
-                board[i] = ' '  # Restore the board state
+                score = minimax_with_cutoff(board, depth + 1, False,
+                                            depth_cutoff, alpha, beta)
+                # Restore the board state
+                board[i] = ' '
                 best_score = max(score, best_score)
                 alpha = max(alpha, best_score)
                 if beta <= alpha:
@@ -93,8 +103,10 @@ def minimax_with_cutoff(board, depth, is_maximizing, depth_cutoff, alpha, beta):
         for i in range(9):
             if board[i] == ' ':
                 board[i] = 'O'
-                score = minimax_with_cutoff(board, depth + 1, True, depth_cutoff, alpha, beta)
-                board[i] = ' '  # Restore the board state
+                score = minimax_with_cutoff(board, depth + 1, True,
+                                            depth_cutoff, alpha, beta)
+                # Restore the board state
+                board[i] = ' '
                 best_score = min(score, best_score)
                 beta = min(beta, best_score)
                 if beta <= alpha:
